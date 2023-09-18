@@ -56,30 +56,37 @@ describe('parseAttrs', () => {
     expect(result).toEqual(expectedParsedAttrs)
   })
 
-  it('should handle double-quoted values with special characters', () => {
-    const input =
-      'name="@myName" data-value="[1, 2, 3]" foo="{bar: \'bar\'}" checked=false'
+  it('should handle unquoted values with number-like correctly', () => {
+    const input = 'foo=42 bar=-42 baz=3.14 qux=0.5 quux=-0.5 nan=.5'
     const expectedParsedAttrs = {
-      name: '@myName',
-      'data-value': [1, 2, 3],
-      foo: { bar: 'bar' },
-      checked: false
+      foo: 42,
+      bar: -42,
+      baz: 3.14,
+      qux: 0.5,
+      quux: -0.5,
+      nan: '.5'
     }
 
     const result = parseAttrs(input)
     expect(result).toEqual(expectedParsedAttrs)
   })
 
-  it('should handle unquoted values with special characters', () => {
-    const input = 'name=myName data-value=[1,2,3] disabled={value:true}'
-    const expectedParsedAttrs = {
-      name: 'myName',
-      'data-value': [1, 2, 3],
-      disabled: { value: true }
-    }
+  it('throws single-quoted values with ambiguous ampersand', () => {
+    const input = "foo='bar &amp; baz'"
 
-    const result = parseAttrs(input)
-    expect(result).toEqual(expectedParsedAttrs)
+    expect(() => parseAttrs(input)).toThrow("foo='bar &amp; baz'")
+  })
+
+  it('throws double-quoted values with ambiguous ampersand', () => {
+    const input = 'foo="bar &amp; baz"'
+
+    expect(() => parseAttrs(input)).toThrow('foo="bar &amp; baz"')
+  })
+
+  it('should not throws unquoted values with ambiguous ampersand', () => {
+    const input = 'foo=bar&amp;baz'
+
+    expect(() => parseAttrs(input)).not.toThrow()
   })
 })
 
@@ -116,11 +123,4 @@ describe('serializeTokens', () => {
     const result = serializeTokens(tokens)
     expect(result).toEqual(expectedSerializedString)
   })
-})
-
-it('test', () => {
-  const attrs = `id="foo" class=\'bar\' num="123" data-value=baz name="@myName" data-value="[1, 2, 3]" fooBar="{foo: 'bar'}" checked=false disabled`
-  const parsedAttrs = parseAttrs(attrs)
-
-  console.log(parsedAttrs)
 })
