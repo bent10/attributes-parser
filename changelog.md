@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/bent10/attributes-parser/compare/v1.0.3...v1.0.4) (2023-09-24)
+
+
+### Bug Fixes
+
+* resolves `moo` default import ([456f8d7](https://github.com/bent10/attributes-parser/commit/456f8d7b2d12fcb304948093131976d100d490a7))
+
 ## [1.0.3](https://github.com/bent10/attributes-parser/compare/v1.0.2...v1.0.3) (2023-09-24)
 
 
