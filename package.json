@@ -47,7 +47,7 @@
     "build": "vite build && npm run types",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "types": "tsc src/*.ts -d --emitDeclarationOnly --outDir ./dist",
+    "types": "tsc -d --emitDeclarationOnly --outDir ./dist",
     "lint": "tsc --noEmit && eslint .",
     "format": "prettier --write ."
   },
