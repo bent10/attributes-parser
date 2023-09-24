@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/bent10/attributes-parser/compare/v1.0.1...v1.0.2) (2023-09-24)
+
+
+### Bug Fixes
+
+* **deps:** moo ([b0f5d26](https://github.com/bent10/attributes-parser/commit/b0f5d26942b944323746907512341339df6fe0fc))
+
 ## [1.0.1](https://github.com/bent10/attributes-parser/compare/v1.0.0...v1.0.1) (2023-09-18)
 
 
