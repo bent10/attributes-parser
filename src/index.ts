@@ -1,4 +1,4 @@
-import { states } from 'moo'
+import moo from 'moo'
 import {
   ATTR_DOUBLE_QUOTED_VALUE_RULE,
   ATTR_NAME_RULE,
@@ -10,7 +10,7 @@ import type { Attributes, Token, TokenType } from './types.js'
 /**
  * Lexer states and rules for tokenizing HTML attributes.
  */
-const lexer = states({
+const lexer = moo.states({
   main: {
     whitespace: /[ \t]+/,
     name: ATTR_NAME_RULE,
