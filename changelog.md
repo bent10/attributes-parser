@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/bent10/attributes-parser/compare/v1.0.2...v1.0.3) (2023-09-24)
+
+
+### Bug Fixes
+
+* resolves named export `states` ([605a92a](https://github.com/bent10/attributes-parser/commit/605a92a2db1464bf3ac6fd0725282e43fad23595))
+* **types:** resolve `moo` default export ([2102a01](https://github.com/bent10/attributes-parser/commit/2102a01374f3df9d523aea32587dcd69ee44cd24))
+
 ## [1.0.2](https://github.com/bent10/attributes-parser/compare/v1.0.1...v1.0.2) (2023-09-24)
 
 
