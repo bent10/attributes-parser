@@ -1,4 +1,4 @@
-import moo from 'moo'
+import * as moo from 'moo'
 import {
   ATTR_DOUBLE_QUOTED_VALUE_RULE,
   ATTR_NAME_RULE,
