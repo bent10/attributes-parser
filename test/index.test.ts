@@ -5,7 +5,7 @@ import {
   parseAttrs,
   serializeTokens,
   type Token
-} from '../dist/index.js'
+} from '../src/index.js'
 
 describe('tokenizeAttrs', () => {
   it('should tokenize a string of attributes', () => {
