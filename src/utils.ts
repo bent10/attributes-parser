@@ -1,3 +1,5 @@
+import jsonLoose from 'json-loose'
+
 export function formatString(text: string) {
   const value =
     typeof text === 'string' && /^(['"]).*?\1$/.test(text)
@@ -10,7 +12,7 @@ export function formatString(text: string) {
     (value.startsWith('[') && value.endsWith(']')) ||
     (value.startsWith('{') && value.endsWith('}'))
   ) {
-    return Function(`return ${value}`)()
+    return JSON.parse(jsonLoose(value))
   }
 
   return value
