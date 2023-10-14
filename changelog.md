@@ -1,3 +1,23 @@
+# [2.0.0](https://github.com/bent10/attributes-parser/compare/v1.0.4...v2.0.0) (2023-10-14)
+
+
+### Bug Fixes
+
+* resolve security issue ([7a0d271](https://github.com/bent10/attributes-parser/commit/7a0d271be66f9b430827569265d8ddbf3238fcb7))
+
+
+### Features
+
+* add `.umd.cjs` file ([5953f71](https://github.com/bent10/attributes-parser/commit/5953f719e602be68b8fcfede7fce46dc9d723da6))
+* add non-enumerable `toString()` and `getTokens()` helpers to the `Attributes` ([082484c](https://github.com/bent10/attributes-parser/commit/082484cefceb1f60a8468efa856152145a620d9c))
+* enhance rules for better data handling ([42a2a53](https://github.com/bent10/attributes-parser/commit/42a2a5392ae8b3756ce2e38baa2c358f07514a1b))
+* use default export, removes tokenizer and serializer ([a85b7df](https://github.com/bent10/attributes-parser/commit/a85b7df0438dfb3813b1d1a069fa4742fdc4dd7d))
+
+
+### BREAKING CHANGES
+
+* removes `tokenizeAttrs` and `serializeTokens`
+
 ## [1.0.4](https://github.com/bent10/attributes-parser/compare/v1.0.3...v1.0.4) (2023-09-24)
 
 
