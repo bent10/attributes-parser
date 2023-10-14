@@ -49,7 +49,6 @@
     "build:ssr": "vite build --ssr src/index.ts",
     "build:prod": "vite build",
     "test": "vitest",
-    "bench": "vitest bench",
     "coverage": "vitest run --coverage",
     "types": "tsc -d --emitDeclarationOnly --outDir ./dist",
     "lint": "tsc --noEmit && eslint .",

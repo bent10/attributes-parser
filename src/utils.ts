@@ -1,5 +1,11 @@
 import jsonLoose from 'json-loose'
 
+/**
+ * Formats a string value. If the input text is enclosed in single or double quotes,
+ * it omits the quotes. If the value resembles an object (starts with `[`
+ * or `{` and ends with `]` or `}`), it is parsed as JSON using the
+ * `jsonLoose`.
+ */
 export function formatString(text: string) {
   const value =
     typeof text === 'string' && /^(['"]).*?\1$/.test(text)

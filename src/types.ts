@@ -1,9 +1,4 @@
 /**
- * Represents unknown JavaScript value.
- */
-export type UnknownType = unknown
-
-/**
  * Attributes represent a collection of key-value pairs where the keys are
  * strings and the values can be null, string, boolean, number, an array, or an
  * object with keys of type string and values.
@@ -14,28 +9,9 @@ export type Attributes = {
     | string
     | boolean
     | number
-    | UnknownType[]
-    | { [key: string]: UnknownType }
+    | unknown[]
+    | { [key: string]: unknown }
 }
-
-/**
- * TokenType represents the type of a lexer token, which can be one of the
- * following:
- *
- * - 'WhiteSpace'
- * - 'Separator'
- * - 'BooleanLiteral'
- * - 'NumericLiteral'
- * - 'StringLiteral'
- * - 'AttributeName'
- */
-export type TokenType =
-  | 'WhiteSpace'
-  | 'Separator'
-  | 'BooleanLiteral'
-  | 'NumericLiteral'
-  | 'StringLiteral'
-  | 'AttributeName'
 
 /**
  * Token represents a lexer token with various properties.
@@ -82,3 +58,22 @@ export interface Token {
    */
   col: number
 }
+
+/**
+ * TokenType represents the type of a lexer token, which can be one of the
+ * following:
+ *
+ * - 'WhiteSpace'
+ * - 'Separator'
+ * - 'BooleanLiteral'
+ * - 'NumericLiteral'
+ * - 'StringLiteral'
+ * - 'AttributeName'
+ */
+export type TokenType =
+  | 'WhiteSpace'
+  | 'Separator'
+  | 'BooleanLiteral'
+  | 'NumericLiteral'
+  | 'StringLiteral'
+  | 'AttributeName'

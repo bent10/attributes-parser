@@ -4,7 +4,7 @@ A utility for parsing and tokenizing attributes string into meaningful tokens an
 
 ## Install
 
-You can install this module using npm or yarn:
+You can install this module using npm or yarn, it's just `3.24 kB | min: 1.94 kB`:
 
 ```bash
 npm i attributes-parser
@@ -16,110 +16,32 @@ yarn add attributes-parser
 
 ## Usage
 
-### Parse Attributes
-
-To parse an attribute string into key-value pairs, use the `parseAttrs` function.
-
 ```js
-import { parseAttrs } from 'attributes-parser'
+import parseAttrs from 'attributes-parser'
 
-const attrs = `id="foo" class=\'bar\' num="3.14" data-value=baz name="@myName" data-value="[1, 2, 3]" fooBar="{foo: 'bar'}" checked=false disabled`
-const parsedAttrs = parseAttrs(attrs)
+const attr = `id="my-id" class='my-class' num=3.14 numNeg=-3.14 data-num="3.14" data-value="123" data-value=1_000_000 options=\'{"key": "value", "array": [1, 2, 3]}\' data-list="[1, 2, 3]" punc="a=b,c,d,e" checked=false checked=false data-checked="false" disabled`
+const parsedAttr = parseAttrs(attr)
 
-console.log(parsedAttrs)
+console.log(parsedAttr)
 ```
 
 Yields:
 
 ```js
 {
-  id: 'foo',
-  class: 'bar',
-  num: 3.14,
-  'data-value': [ 1, 2, 3 ],
-  name: '@myName',
-  fooBar: { foo: 'bar' },
-  checked: false,
-  disabled: true
+  id: 'my-id',
+  class: 'my-class',
+  num: 3.14,  // number
+  numNeg: -3.14,  // negative number
+  'data-num': '3.14',  // preserve string
+  'data-value': 1000000,  // duplicate key, second value is kept
+  options: { key: 'value', array: [ 1, 2, 3 ] },
+  'data-list': [ 1, 2, 3 ],
+  punc: 'a=b,c,d,e',  // allowed, no ambiguous ampersand
+  checked: false,  // boolean
+  'data-checked': 'false',  // preserve string
+  disabled: "disabled"  // shorthand
 }
-```
-
-### Tokenize Attributes
-
-To tokenize an attribute string, use the `tokenizeAttrs` function.
-
-```js
-import { tokenizeAttrs } from 'attributes-parser'
-
-const attrs = `id="foo" class=\'bar\' num="3.14" data-value=baz name="@myName" data-value="[1, 2, 3]" fooBar="{foo: 'bar'}" checked=false disabled`
-const tokens = tokenizeAttrs(attributeString)
-
-console.log(tokens)
-```
-
-Yields:
-
-```js
-[
-  {
-    type: 'name',
-    value: 'id',
-    text: 'id',
-    toString: [Function: tokenToString],
-    offset: 0,
-    lineBreaks: 0,
-    line: 1,
-    col: 1
-  },
-  {
-    type: 'separator',
-    value: '=',
-    text: '=',
-    toString: [Function: tokenToString],
-    offset: 2,
-    lineBreaks: 0,
-    line: 1,
-    col: 3
-  },
-  {
-    type: 'doubleQuotedvalue',
-    value: 'foo',
-    text: '"foo"',
-    toString: [Function: tokenToString],
-    offset: 3,
-    lineBreaks: 0,
-    line: 1,
-    col: 4
-  },
-  ...
-]
-```
-
-### Serialize Tokens
-
-To serialize an array of tokens into a string, use the `serializeTokens` function.
-
-```ts
-import { serializeTokens, type Token } from 'attributes-parser'
-
-const tokens = [
-  { type: 'name', value: 'id', text: 'id' },
-  { type: 'separator', value: '=', text: '=' },
-  { type: 'unquotedvalue', value: 'foo', text: 'foo' },
-  { type: 'whitespace', value: ' ', text: ' ' },
-  { type: 'name', value: 'class', text: 'class' },
-  { type: 'separator', value: '=', text: '=' },
-  { type: 'doubleQuotedvalue', value: 'bar', text: '"bar"' }
-] as Token[]
-const attrs = serializeTokens(tokens)
-
-console.log(attrs)
-```
-
-Yields:
-
-```bash
-id=foo class="bar"
 ```
 
 ## Attribute Validation
@@ -138,7 +60,7 @@ It is better to validate and sanitize your attributes string to ensure they conf
 
 Below are the test cases that demonstrate valid and invalid attribute patterns according to these rules:
 
-### Attribute names
+### `AttributeName`
 
 #### Valid
 
@@ -166,7 +88,30 @@ Below are the test cases that demonstrate valid and invalid attribute patterns a
 - `name\x00` (Contains prohibited character)
 - `name\n` (Contains prohibited character)
 
-### Single-quoted attribute values
+### `BooleanLiteral`
+
+- `true`
+- `false`
+
+### `NumericLiteral`
+
+#### Valid
+
+- `0x1A3` (hexLiteral)
+- `0o755` (octalLiteral)
+- `0b1101` (binaryLiteral)
+- `123.456` (decimalLiteral)
+- `1.23e-45` (scientificLiteral)
+- `0` (zeroLiteral)
+- `1_000_000` (underscoredLiteral)
+- `42` (integerLiteral)
+- `1e3` (scientificNoFraction)
+
+#### Invalid
+
+- `12.34e` (scientificNoExponent)
+
+### `StringLiteral` (Single-quoted)
 
 #### Valid
 
@@ -192,7 +137,7 @@ Below are the test cases that demonstrate valid and invalid attribute patterns a
 - `'invalid value''` (Contains prohibited character)
 - `'invalid &value;'` (Contains an ambiguous ampersand, e.g. `&amp;`)
 
-### Double-quoted attribute values
+### `StringLiteral` (Double-quoted)
 
 #### Valid
 
@@ -218,18 +163,18 @@ Below are the test cases that demonstrate valid and invalid attribute patterns a
 - `"invalid value""` (Contains prohibited character)
 - `"invalid &value;"` (Contains an ambiguous ampersand, e.g. `&amp;`)
 
-### Unquoted attribute values
+### `StringLiteral` (Unquoted)
 
 #### Valid
 
 - `validValue`
 - `valid@value`
-- `"42"`
-- `"-42"`
-- `"3.14"`
-- `"0.5"`
-- `"-0.5"`
-- `".5"`
+- `42`
+- `-42`
+- `3.14`
+- `0.5`
+- `-0.5`
+- `.5`
 - `true`
 - `false`
 
@@ -244,6 +189,10 @@ Below are the test cases that demonstrate valid and invalid attribute patterns a
 - `value<` (Contains prohibited character)
 - `value\x00` (Contains prohibited character)
 - `value\n` (Contains prohibited character)
+
+## Related
+
+- [json-loose](https://github.com/bent10/json-loose) – Transforms loosely structured plain object strings into valid JSON strings.
 
 ## Contributing
 

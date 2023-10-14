@@ -1,21 +1,19 @@
 import moo from 'moo'
 import {
-  UnquotedLiteral,
   AttributeName,
   BooleanLiteral,
   DoubleQuotedLiteral,
   NumericLiteral,
   SingleQuotedLiteral,
+  UnquotedLiteral,
   WhiteSpace
 } from './constants.js'
 import { formatString } from './utils.js'
-import type { Attributes, Token, TokenType } from './types.js'
+import type { Attributes } from './types.js'
 
 const lexer = moo.states({
   main: {
     WhiteSpace: { match: WhiteSpace, lineBreaks: true },
-    AttributeName,
-    Separator: '=',
     BooleanLiteral: {
       match: BooleanLiteral,
       value(x) {
@@ -46,30 +44,23 @@ const lexer = moo.states({
       match: UnquotedLiteral,
       value: formatString,
       type: () => 'StringLiteral'
-    }
+    },
+    AttributeName,
+    Separator: '='
   }
 })
 
 /**
- * Tokenize the attributes string.
- *
- * @param str - Attributes string.
- * @returns Array of tokens.
- */
-export function tokenizeAttrs(str: string) {
-  return lexer.reset(str)
-}
-
-/**
  * Parse attributes string into an object.
  *
- * @param str - Attributes string.
+ * @param input - Attributes string.
  * @returns Parsed attributes as key-value pairs.
  */
-export function parseAttrs(str: string) {
-  const tokens = tokenizeAttrs(str)
-  const attrs: Attributes = {}
+export default function parseAttrs(input: string): Attributes {
   let currentKey = null
+
+  const tokens = lexer.reset(input)
+  const attrs = {} as Attributes
 
   for (const { type, value } of tokens) {
     switch (type) {
@@ -77,6 +68,7 @@ export function parseAttrs(str: string) {
         currentKey = value
         // Initialize with true value
         attrs[currentKey] = currentKey
+
         break
 
       case 'BooleanLiteral':
@@ -93,29 +85,4 @@ export function parseAttrs(str: string) {
   return attrs
 }
 
-/**
- * Serialize an array of tokens into a string.
- *
- * @param tokens - Array of tokens to serialize.
- * @returns Serialized string.
- */
-export function serializeTokens(tokens: Token[]) {
-  const type: TokenType[] = [
-    'WhiteSpace',
-    'Separator',
-    'BooleanLiteral',
-    'NumericLiteral',
-    'StringLiteral',
-    'AttributeName'
-  ]
-
-  return tokens
-    .map(({ type, value, text }) => ({ type, value, text }))
-    .reduce((acc, cur) => {
-      if (type.indexOf(cur.type) === -1) return acc
-
-      return acc + cur.text
-    }, '')
-}
-
-export type { Attributes, Token, TokenType }
+export type { Attributes, Token, TokenType } from './types.js'

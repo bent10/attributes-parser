@@ -11,7 +11,7 @@ export default defineConfig(({ command, ssrBuild }) => {
       emptyOutDir: false,
       lib: {
         entry: resolve(__dirname, 'src/index.ts'),
-        name: 'AttrsParser',
+        name: 'parseAttrs',
         formats: ['umd'],
         fileName: 'index'
       }

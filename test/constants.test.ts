@@ -8,7 +8,6 @@ import {
   SingleQuotedLiteral,
   WhiteSpace
 } from '../src/constants'
-import { match, matchNumber } from './utils'
 
 it('should match various white space characters', () => {
   expect(match(' \t\v\f\uFEFF', WhiteSpace)).toBe(' \t\v\f\uFEFF')
@@ -135,3 +134,11 @@ it('should match double-quoted attribute values with ampersand restrictions', ()
   expect(DoubleQuotedLiteral.test('="invalid value\\"')).toBe(false)
   expect(DoubleQuotedLiteral.test('="invalid &value;')).toBe(false) // ambiguous ampersand
 })
+
+function match(str: string, regex: RegExp, prefix = '') {
+  return (prefix + str).match(regex)?.toString()
+}
+
+function matchNumber(str: string, regex: RegExp, prefix = '') {
+  return Number((prefix + str).match(regex)?.[0])
+}
