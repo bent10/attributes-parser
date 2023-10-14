@@ -26,13 +26,13 @@
     "markdown"
   ],
   "type": "module",
-  "main": "dist/index.cjs",
+  "main": "dist/index.umd.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
+      "require": "./dist/index.umd.cjs",
       "types": "./dist/index.d.ts"
     }
   },
@@ -42,14 +42,21 @@
     "license"
   ],
   "scripts": {
-    "start": "npm run dev",
-    "dev": "vite build --watch",
-    "build": "vite build && npm run types",
+    "start": "npm run prod",
+    "prod": "vite build && vite",
+    "dev": "vite build:ssr --watch",
+    "build": "npm run build:ssr && npm run build:prod && npm run types",
+    "build:ssr": "vite build --ssr src/index.ts",
+    "build:prod": "vite build",
     "test": "vitest",
+    "bench": "vitest bench",
     "coverage": "vitest run --coverage",
     "types": "tsc -d --emitDeclarationOnly --outDir ./dist",
     "lint": "tsc --noEmit && eslint .",
     "format": "prettier --write ."
+  },
+  "dependencies": {
+    "moo": "^0.5.2"
   },
   "devDependencies": {
     "@types/moo": "0.5.7",
@@ -66,8 +73,5 @@
   "prettier": "doogu/prettier.json",
   "release": {
     "extends": "doogu/release.config.js"
-  },
-  "dependencies": {
-    "moo": "^0.5.2"
   }
 }
