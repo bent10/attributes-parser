@@ -1,65 +1,54 @@
 import moo from 'moo'
 import {
-  ATTR_DOUBLE_QUOTED_VALUE_RULE,
-  ATTR_NAME_RULE,
-  ATTR_SINGLE_QUOTED_VALUE_RULE,
-  ATTR_UNQUOTED_VALUE_RULE
+  UnquotedLiteral,
+  AttributeName,
+  BooleanLiteral,
+  DoubleQuotedLiteral,
+  NumericLiteral,
+  SingleQuotedLiteral,
+  WhiteSpace
 } from './constants.js'
+import { formatString } from './utils.js'
 import type { Attributes, Token, TokenType } from './types.js'
 
-/**
- * Lexer states and rules for tokenizing HTML attributes.
- */
 const lexer = moo.states({
   main: {
-    whitespace: /[ \t]+/,
-    name: ATTR_NAME_RULE,
-    separator: {
-      match: '=',
-      push: 'insideValue'
-    }
-  },
-  insideValue: {
-    whitespace: /[ \t]+/,
-    singleQuotedvalue: {
-      match: ATTR_SINGLE_QUOTED_VALUE_RULE,
-      value,
-      push: 'main'
+    WhiteSpace: { match: WhiteSpace, lineBreaks: true },
+    AttributeName,
+    Separator: '=',
+    BooleanLiteral: {
+      match: BooleanLiteral,
+      value(x) {
+        return (x === 'true' ? true : false) as unknown as string
+      }
     },
-    doubleQuotedvalue: {
-      match: ATTR_DOUBLE_QUOTED_VALUE_RULE,
-      value,
-      push: 'main'
+    NumericLiteral: {
+      match: NumericLiteral,
+      value(x) {
+        const n = Number(x)
+
+        return (Number.isNaN(n)
+          ? Number(x.replace(/_|n$/g, ''))
+          : Number(x)) as unknown as string
+      }
     },
-    unquotedvalue: {
-      match: ATTR_UNQUOTED_VALUE_RULE,
-      value,
-      push: 'main'
+    SingleQuotedValue: {
+      match: SingleQuotedLiteral,
+      value: formatString,
+      type: () => 'StringLiteral'
+    },
+    DoubleQuotedLiteral: {
+      match: DoubleQuotedLiteral,
+      value: formatString,
+      type: () => 'StringLiteral'
+    },
+    UnquotedLiteral: {
+      match: UnquotedLiteral,
+      value: formatString,
+      type: () => 'StringLiteral'
     }
   }
 })
-
-/**
- * Transform function values.
- */
-function value(text: string) {
-  let value = text
-  if (typeof text === 'string' && /^(['"]).*?\1$/.test(text)) {
-    value = text.slice(1, -1)
-  }
-
-  // number like matches (e.g. 42, -42, 3.14, 0.5, -0.5)
-  if (/^-?0*(\d+(?:\.\d+)?)$/.test(value)) {
-    return Number(value)
-  }
-
-  return (value.startsWith('[') && value.endsWith(']')) ||
-    (value.startsWith('{') && value.endsWith('}')) ||
-    value === 'true' ||
-    value === 'false'
-    ? Function(`return ${value}`)()
-    : value
-}
 
 /**
  * Tokenize the attributes string.
@@ -68,13 +57,7 @@ function value(text: string) {
  * @returns Array of tokens.
  */
 export function tokenizeAttrs(str: string) {
-  lexer.reset(str)
-  const tokens = []
-  let token
-  while ((token = lexer.next())) {
-    tokens.push(token)
-  }
-  return tokens as Token[]
+  return lexer.reset(str)
 }
 
 /**
@@ -88,20 +71,22 @@ export function parseAttrs(str: string) {
   const attrs: Attributes = {}
   let currentKey = null
 
-  for (const token of tokens) {
-    if (token.type === 'name') {
-      currentKey = token.value
+  for (const { type, value } of tokens) {
+    switch (type) {
+      case 'AttributeName':
+        currentKey = value
+        // Initialize with true value
+        attrs[currentKey] = currentKey
+        break
 
-      // Initialize with true value
-      attrs[currentKey] = true
-    } else if (
-      (token.type === 'unquotedvalue' ||
-        token.type === 'singleQuotedvalue' ||
-        token.type === 'doubleQuotedvalue') &&
-      currentKey
-    ) {
-      attrs[currentKey] = token.value
-      currentKey = null
+      case 'BooleanLiteral':
+      case 'NumericLiteral':
+      case 'StringLiteral':
+        if (currentKey) {
+          attrs[currentKey] = value
+          currentKey = null
+        }
+        break
     }
   }
 
@@ -116,12 +101,12 @@ export function parseAttrs(str: string) {
  */
 export function serializeTokens(tokens: Token[]) {
   const type: TokenType[] = [
-    'whitespace',
-    'name',
-    'separator',
-    'singleQuotedvalue',
-    'doubleQuotedvalue',
-    'unquotedvalue'
+    'WhiteSpace',
+    'Separator',
+    'BooleanLiteral',
+    'NumericLiteral',
+    'StringLiteral',
+    'AttributeName'
   ]
 
   return tokens

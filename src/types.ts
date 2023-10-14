@@ -1,32 +1,41 @@
 /**
- * AnyType is a type that represents any possible JavaScript value.
- *
- * **Note:** This type should be used sparingly, as it bypasses type checking.
+ * Represents unknown JavaScript value.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnyType = any
+export type UnknownType = unknown
 
 /**
  * Attributes represent a collection of key-value pairs where the keys are
- * strings and the values can be null, string, boolean, number, an array of
- * AnyType, or an object with keys of type string and values of type AnyType.
+ * strings and the values can be null, string, boolean, number, an array, or an
+ * object with keys of type string and values.
  */
 export type Attributes = {
-  [key: string]: null | string | boolean | number | AnyType[] | { [key: string]: AnyType }
+  [key: string]:
+    | null
+    | string
+    | boolean
+    | number
+    | UnknownType[]
+    | { [key: string]: UnknownType }
 }
 
 /**
  * TokenType represents the type of a lexer token, which can be one of the
  * following:
  *
- * - 'whitespace'
- * - 'name'
- * - 'separator'
- * - 'singleQuotedvalue'
- * - 'doubleQuotedvalue'
- * - 'unquotedvalue'
+ * - 'WhiteSpace'
+ * - 'Separator'
+ * - 'BooleanLiteral'
+ * - 'NumericLiteral'
+ * - 'StringLiteral'
+ * - 'AttributeName'
  */
-export type TokenType = 'whitespace' | 'name' | 'separator' | 'singleQuotedvalue' | 'doubleQuotedvalue' | 'unquotedvalue'
+export type TokenType =
+  | 'WhiteSpace'
+  | 'Separator'
+  | 'BooleanLiteral'
+  | 'NumericLiteral'
+  | 'StringLiteral'
+  | 'AttributeName'
 
 /**
  * Token represents a lexer token with various properties.
