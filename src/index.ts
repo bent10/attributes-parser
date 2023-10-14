@@ -8,7 +8,7 @@ import {
   UnquotedLiteral,
   WhiteSpace
 } from './constants.js'
-import { formatString } from './utils.js'
+import { formatString, serialize } from './utils.js'
 import type { Attributes } from './types.js'
 
 const lexer = moo.states({
@@ -61,6 +61,21 @@ export default function parseAttrs(input: string): Attributes {
 
   const tokens = lexer.reset(input)
   const attrs = {} as Attributes
+
+  Object.defineProperties(attrs, {
+    toString: {
+      writable: false,
+      enumerable: false,
+      configurable: false,
+      value: () => serialize(attrs)
+    },
+    getTokens: {
+      writable: false,
+      enumerable: false,
+      configurable: false,
+      value: () => Array.from(lexer.reset(input))
+    }
+  })
 
   for (const { type, value } of tokens) {
     switch (type) {

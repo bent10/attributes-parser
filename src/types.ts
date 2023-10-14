@@ -11,6 +11,11 @@ export type Attributes = {
     | number
     | unknown[]
     | { [key: string]: unknown }
+} & AttributesHelpers
+
+export interface AttributesHelpers {
+  toString(): string
+  getTokens(): Token[]
 }
 
 /**

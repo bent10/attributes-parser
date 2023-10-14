@@ -23,6 +23,8 @@ const attr = `id="my-id" class='my-class' num=3.14 numNeg=-3.14 data-num="3.14" 
 const parsedAttr = parseAttrs(attr)
 
 console.log(parsedAttr)
+// use `parsedAttr.toString()` to turn it back into a string
+// use `parsedAttr.getTokens()` to get the tokens array
 ```
 
 Yields:

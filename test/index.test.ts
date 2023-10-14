@@ -21,6 +21,10 @@ it('should parse attributes into key-value pairs', () => {
   const result = parseAttrs(input)
 
   expect(result).toEqual(expectedResult)
+  expect(result.toString()).toEqual(
+    `id="my-id" class="my-class" num=3.14 numNeg=-3.14 data-num="3.14" options='{"key":"value","array":[1,2,3]}' data-list='[1,2,3]' punc="a=b,c,d,e" checked=false data-checked="false" disabled="disabled"`
+  )
+  expect(result.getTokens()).toMatchSnapshot()
 })
 
 it('should use the last duplicate key value', () => {

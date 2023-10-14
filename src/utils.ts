@@ -1,4 +1,5 @@
 import jsonLoose from 'json-loose'
+import type { Attributes } from './types.js'
 
 /**
  * Formats a string value. If the input text is enclosed in single or double quotes,
@@ -22,4 +23,29 @@ export function formatString(text: string) {
   }
 
   return value
+}
+
+/**
+ * Serializes an object of attributes into an attribute string.
+ */
+export function serialize(attrs: Attributes) {
+  let acc = ''
+  for (const key in attrs) {
+    const value = attrs[key]
+
+    switch (typeof value) {
+      case 'object':
+        acc += ` ${key}='${JSON.stringify(value)}'`
+        break
+      case 'string':
+        acc += ` ${key}="${value}"`
+        break
+      case 'number':
+      case 'boolean':
+        acc += ` ${key}=${value}`
+        break
+    }
+  }
+
+  return acc.slice(1)
 }
