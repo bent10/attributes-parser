@@ -26,13 +26,14 @@
     "markdown"
   ],
   "type": "module",
-  "main": "dist/index.umd.cjs",
+  "main": "dist/index.cjs",
+  "browser": "dist/index.umd.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.umd.cjs",
+      "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
     }
   },
@@ -42,12 +43,9 @@
     "license"
   ],
   "scripts": {
-    "start": "npm run prod",
-    "prod": "vite build && vite",
-    "dev": "vite build:ssr --watch",
-    "build": "npm run build:ssr && npm run build:prod && npm run types",
-    "build:ssr": "vite build --ssr src/index.ts",
-    "build:prod": "vite build",
+    "start": "vite",
+    "dev": "vite build --watch",
+    "build": "vite build && npm run types",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "types": "tsc -d --emitDeclarationOnly --outDir ./dist",
@@ -58,7 +56,7 @@
     "json-loose": "^1.0.0"
   },
   "devDependencies": {
-    "@types/moo": "0.5.7",
+    "@types/moo": "^0.5.7",
     "doogu": "3.2.7"
   },
   "config": {

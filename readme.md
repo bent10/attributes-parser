@@ -4,14 +4,20 @@ A utility for parsing and tokenizing attributes string into meaningful tokens an
 
 ## Install
 
-You can install this module using npm or yarn, it's just `3.24 kB | min: 1.94 kB`:
+You can install this module using npm or yarn, it's only `2.68 kB | min: 1.10 kB`:
 
 ```bash
 npm i attributes-parser
-
 # or
-
 yarn add attributes-parser
+```
+
+Alternatively, you can also include this module directly in your HTML file from [CDN](https://www.jsdelivr.com/package/npm/attributes-parser?tab=files&path=dist):
+
+```html
+<script type="module">
+  import jsonLoose from 'https://cdn.jsdelivr.net/npm/attributes-parser/+esm'
+</script>
 ```
 
 ## Usage

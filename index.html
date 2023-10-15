@@ -10,8 +10,9 @@
   <body>
     <h1>Open your browser console to see the result!</h1>
 
-    <script src="./dist/index.umd.cjs"></script>
-    <script>
+    <script type="module">
+      import parseAttrs from "https://cdn.jsdelivr.net/npm/attributes-parser/+esm"
+
       const attr = `id="my-id" class='my-class' num=3.14 numNeg=-3.14 data-num="3.14" options=\'{"key": "value", "array": [1, 2, 3]}\' data-list="[1, 2, 3]" punc="a=b,c,d,e" checked=false checked=false data-checked="false" disabled`
       const parsedAttr = parseAttrs(attr)
 
