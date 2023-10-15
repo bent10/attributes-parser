@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/bent10/attributes-parser/compare/v2.0.0...v2.1.0) (2023-10-15)
+
+
+### Features
+
+* build for the `esm`, `cjs`, and `umd` formats ([174c0b7](https://github.com/bent10/attributes-parser/commit/174c0b70fe87d9fc79bd79ce594ef0ecb7276af0))
+
 # [2.0.0](https://github.com/bent10/attributes-parser/compare/v1.0.4...v2.0.0) (2023-10-14)
 
 
