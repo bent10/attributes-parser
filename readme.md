@@ -16,7 +16,7 @@ Alternatively, you can also include this module directly in your HTML file from 
 
 ```html
 <script type="module">
-  import jsonLoose from 'https://cdn.jsdelivr.net/npm/attributes-parser/+esm'
+  import parseAttrs from 'https://cdn.jsdelivr.net/npm/attributes-parser/+esm'
 </script>
 ```
 
