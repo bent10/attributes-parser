@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/bent10/attributes-parser/compare/v2.1.0...v2.1.1) (2023-10-19)
+
+
+### Bug Fixes
+
+* **docs:** typo ([80f433c](https://github.com/bent10/attributes-parser/commit/80f433c3f27de9f996f3bef3c79953b4899b183a))
+
 # [2.1.0](https://github.com/bent10/attributes-parser/compare/v2.0.0...v2.1.0) (2023-10-15)
 
 
