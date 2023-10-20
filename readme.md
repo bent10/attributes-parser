@@ -14,11 +14,11 @@ yarn add attributes-parser
 
 Alternatively, you can also include this module directly in your HTML file from [CDN](https://www.jsdelivr.com/package/npm/attributes-parser?tab=files&path=dist):
 
-```html
-<script type="module">
-  import parseAttrs from 'https://cdn.jsdelivr.net/npm/attributes-parser/+esm'
-</script>
-```
+| Type | URL                                                                |
+| :--- | :----------------------------------------------------------------- |
+| ESM  | `https://cdn.jsdelivr.net/npm/attributes-parser/+esm`              |
+| CJS  | `https://cdn.jsdelivr.net/npm/attributes-parser/dist/index.cjs.js` |
+| UMD  | `https://cdn.jsdelivr.net/npm/attributes-parser/dist/index.umd.js` |
 
 ## Usage
 
