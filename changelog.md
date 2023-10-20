@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/bent10/attributes-parser/compare/v2.1.1...v2.1.2) (2023-10-20)
+
+
+### Bug Fixes
+
+* **build:** resolves `umd` mime issue ([722a0b2](https://github.com/bent10/attributes-parser/commit/722a0b2d5b8a2009228a452b40fb0accb96d9b89))
+
 ## [2.1.1](https://github.com/bent10/attributes-parser/compare/v2.1.0...v2.1.1) (2023-10-19)
 
 
