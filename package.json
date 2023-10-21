@@ -56,7 +56,7 @@
     "json-loose": "^1.0.0"
   },
   "devDependencies": {
-    "@types/moo": "0.5.7",
+    "@types/moo": "0.5.8",
     "doogu": "3.2.7"
   },
   "config": {
