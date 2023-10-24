@@ -1,3 +1,10 @@
+## [2.1.3](https://github.com/bent10/attributes-parser/compare/v2.1.2...v2.1.3) (2023-10-24)
+
+
+### Bug Fixes
+
+* updates `WhiteSpace` rule ([7b1459c](https://github.com/bent10/attributes-parser/commit/7b1459cde5166271ff87e2bbdff60b981d7dfca0))
+
 ## [2.1.2](https://github.com/bent10/attributes-parser/compare/v2.1.1...v2.1.2) (2023-10-20)
 
 
