@@ -13,7 +13,7 @@ import type { Attributes } from './types.js'
 
 const lexer = moo.states({
   main: {
-    WhiteSpace: { match: WhiteSpace, lineBreaks: true },
+    WhiteSpace,
     BooleanLiteral: {
       match: BooleanLiteral,
       value(x) {
