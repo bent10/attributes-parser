@@ -1,6 +1,7 @@
 import moo from 'moo'
 import {
   AttributeName,
+  AttributeShorthand,
   BooleanLiteral,
   DoubleQuotedLiteral,
   NumericLiteral,
@@ -14,6 +15,7 @@ import type { Attributes } from './types.js'
 const lexer = moo.states({
   main: {
     WhiteSpace,
+    AttributeShorthand,
     BooleanLiteral: {
       match: BooleanLiteral,
       value(x) {
@@ -77,24 +79,37 @@ export default function parseAttrs(input: string): Attributes {
     }
   })
 
+  const classes: string[] = []
+
+  // we want to handle duplicate keys by taking the last value, but 'class'
   for (const { type, value } of tokens) {
     switch (type) {
       case 'AttributeName':
         currentKey = value
         // Initialize with true value
         attrs[currentKey] = currentKey
-
         break
+      case 'AttributeShorthand':
+        const selector = value[0]
 
+        if (selector === '.') classes.push(value.slice(1))
+        else if (selector === '#') attrs.id = value.slice(1)
+        break
       case 'BooleanLiteral':
       case 'NumericLiteral':
       case 'StringLiteral':
         if (currentKey) {
+          if (currentKey === 'class') classes.push(value)
+
           attrs[currentKey] = value
           currentKey = null
         }
         break
     }
+  }
+
+  if (classes.length) {
+    attrs.class = classes.join(' ')
   }
 
   return attrs

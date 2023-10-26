@@ -2,6 +2,7 @@
 
 import {
   AttributeName,
+  AttributeShorthand,
   BooleanLiteral,
   DoubleQuotedLiteral,
   NumericLiteral,
@@ -40,6 +41,41 @@ it('should match attribute names', () => {
   expect(regex.test('name=')).toBe(false)
   expect(regex.test('name\x00')).toBe(false)
   expect(regex.test('name\n')).toBe(false)
+})
+
+it('should match attribute shorthand', () => {
+  const regex = new RegExp(`^${AttributeShorthand.source}$`)
+
+  // valid attribute shorthands
+  const valid = [
+    'myClass',
+    'element123',
+    'some-id',
+    'under_score',
+    '-moz-valid',
+    '_moz-valid'
+  ]
+
+  valid.map(val => {
+    expect(regex.test('.' + val)).toBe(true)
+    expect(regex.test('#' + val)).toBe(true)
+  })
+
+  // invalid attribute shorthands
+  const invalid = [
+    '1stElement', // starts with a digit
+    'spaces are bad', // contains spaces
+    'invalid*', // contains an invalid character
+    'U+0001', // contains an invalid character
+    'B&W?',
+    'B\\26 W\\3F',
+    'U+1F600'
+  ]
+
+  invalid.map(val => {
+    expect(regex.test('.' + val)).toBe(false)
+    expect(regex.test('#' + val)).toBe(false)
+  })
 })
 
 it('should match boolean literals with optional quotes', () => {

@@ -25,7 +25,7 @@ Alternatively, you can also include this module directly in your HTML file from 
 ```js
 import parseAttrs from 'attributes-parser'
 
-const attr = `id="my-id" class='my-class' num=3.14 numNeg=-3.14 data-num="3.14" data-value="123" data-value=1_000_000 options=\'{"key": "value", "array": [1, 2, 3]}\' data-list="[1, 2, 3]" punc="a=b,c,d,e" checked=false checked=false data-checked="false" disabled`
+const attr = `#my-id.foo.bar class="baz" num=3.14 numNeg=-3.14 data-num="3.14" data-value="123" data-value=1_000_000 options=\'{"key": "value", "array": [1, 2, 3]}\' data-list="[1, 2, 3]" punc="a=b,c,d,e" checked=false checked=false data-checked="false" disabled`
 const parsedAttr = parseAttrs(attr)
 
 console.log(parsedAttr)
@@ -37,12 +37,12 @@ Yields:
 
 ```js
 {
-  id: 'my-id',
-  class: 'my-class',
+  id: 'my-id', //  from shorthand attr #my-id
+  class: 'foo bar baz', //  from shorthand attr .foo.bar and class="baz"
   num: 3.14,  // number
   numNeg: -3.14,  // negative number
   'data-num': '3.14',  // preserve string
-  'data-value': 1000000,  // duplicate key, second value is kept
+  'data-value': 1000000,  // any duplicate key but `class`, last value is kept
   options: { key: 'value', array: [ 1, 2, 3 ] },
   'data-list': [ 1, 2, 3 ],
   punc: 'a=b,c,d,e',  // allowed, no ambiguous ampersand
@@ -95,6 +95,11 @@ Below are the test cases that demonstrate valid and invalid attribute patterns a
 - `name=` (Contains prohibited character)
 - `name\x00` (Contains prohibited character)
 - `name\n` (Contains prohibited character)
+
+### `AttributeShorthand`
+
+- `#bar` (Shorthand for attribute `id="bar"`)
+- `.foo` (Shorthand for attribute `class="foo"`)
 
 ### `BooleanLiteral`
 

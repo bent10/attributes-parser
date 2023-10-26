@@ -27,11 +27,23 @@ it('should parse attributes into key-value pairs', () => {
   expect(result.getTokens()).toMatchSnapshot()
 })
 
-it('should use the last duplicate key value', () => {
-  const input = 'data-value="123" data-value=1_000_000'
+it('should handle attribute shorthands', () => {
+  const input = '#my-id#short-id.foo.bar class="baz"'
 
   const result = parseAttrs(input)
-  expect(result).toEqual({ 'data-value': 1000000 })
+  expect(result).toEqual({ id: 'short-id', class: 'foo bar baz' })
+})
+
+it('should use the last duplicate key value but class', () => {
+  const input =
+    'id="my-id" #short-id .foo.bar data-value="123" data-value=1_000_000 class="baz"'
+
+  const result = parseAttrs(input)
+  expect(result).toEqual({
+    id: 'short-id',
+    'data-value': 1000000,
+    class: 'foo bar baz'
+  })
 })
 
 it('should handle number-like correctly', () => {

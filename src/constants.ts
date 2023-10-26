@@ -7,6 +7,23 @@
 export const WhiteSpace = /[ \t\v\f\ufeff]+/
 
 /**
+ * Ensure that the string doesn't start with any of the prohibited characters,
+ * including space characters, U+0000 NULL, U+0022 QUOTATION MARK
+ * (""), U+0027 APOSTROPHE ("'"), U+003E GREATER-THAN SIGN (>),
+ * U+002F SOLIDUS (/), U+003D EQUALS SIGN (=), control characters
+ * (U+0000 to U+001F, U+007F to U+009F), and characters that are not
+ * defined by Unicode. Following by one or more characters that are not in
+ * the prohibited set of characters.
+ *
+ * @see [HTML syntax attributes](https://www.w3.org/TR/2011/WD-html5-20110525/syntax.html#syntax-attributes)
+ */
+export const AttributeName =
+  /(?:(?![\s\x00\x22\x27\x3E\x2F\x3D\x00-\x1F\x7F-\x9F])[^\s\x00-\x1F\x7F-\x9F\x22\x27\x3E\x2F\x3D])+/
+
+export const AttributeShorthand =
+  /[\.#](?:(?!-?\d)(?:[a-zA-Z0-9\xA0-\uFFFF_-])+)/
+
+/**
  * Matches boolean literals, allowing for optional single or double quotes.
  */
 export const BooleanLiteral = /(?<==)(?:true|false)/
@@ -50,17 +67,3 @@ export const DoubleQuotedLiteral =
  * @see [HTML syntax attributes](https://www.w3.org/TR/2011/WD-html5-20110525/syntax.html#syntax-attributes)
  */
 export const UnquotedLiteral = /(?<==)[^"\s'`=<>\x00]+/
-
-/**
- * Ensure that the string doesn't start with any of the prohibited characters,
- * including space characters, U+0000 NULL, U+0022 QUOTATION MARK
- * (""), U+0027 APOSTROPHE ("'"), U+003E GREATER-THAN SIGN (>),
- * U+002F SOLIDUS (/), U+003D EQUALS SIGN (=), control characters
- * (U+0000 to U+001F, U+007F to U+009F), and characters that are not
- * defined by Unicode. Following by one or more characters that are not in
- * the prohibited set of characters.
- *
- * @see [HTML syntax attributes](https://www.w3.org/TR/2011/WD-html5-20110525/syntax.html#syntax-attributes)
- */
-export const AttributeName =
-  /(?:(?![\s\x00\x22\x27\x3E\x2F\x3D\x00-\x1F\x7F-\x9F])[^\s\x00-\x1F\x7F-\x9F\x22\x27\x3E\x2F\x3D])+/
