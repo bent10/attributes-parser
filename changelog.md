@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/bent10/attributes-parser/compare/v2.1.3...v2.2.0) (2023-10-26)
+
+
+### Features
+
+* allows shorthand for `id` and `class` ([658c4cd](https://github.com/bent10/attributes-parser/commit/658c4cd3d2f5c4de346bc5e05b8dbb87427cdda2))
+
 ## [2.1.3](https://github.com/bent10/attributes-parser/compare/v2.1.2...v2.1.3) (2023-10-24)
 
 
