@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@types/moo": "0.5.9",
-    "doogu": "3.2.7"
+    "doogu": "3.2.8"
   },
   "config": {
     "commitizen": {
