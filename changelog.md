@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/bent10/attributes-parser/compare/v2.2.0...v2.2.1) (2023-12-10)
+
+
+### Bug Fixes
+
+* **deps:** add `vite-plugin-resolve-umd-format` ([6a43967](https://github.com/bent10/attributes-parser/commit/6a439670490e4367daed1badc96cbe25bfcd7e3b))
+
 # [2.2.0](https://github.com/bent10/attributes-parser/compare/v2.1.3...v2.2.0) (2023-10-26)
 
 
