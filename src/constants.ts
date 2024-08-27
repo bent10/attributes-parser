@@ -18,10 +18,11 @@ export const WhiteSpace = /[ \t\v\f\ufeff]+/
  * @see [HTML syntax attributes](https://www.w3.org/TR/2011/WD-html5-20110525/syntax.html#syntax-attributes)
  */
 export const AttributeName =
+  // eslint-disable-next-line no-control-regex
   /(?:(?![\s\x00\x22\x27\x3E\x2F\x3D\x00-\x1F\x7F-\x9F])[^\s\x00-\x1F\x7F-\x9F\x22\x27\x3E\x2F\x3D])+/
 
 export const AttributeShorthand =
-  /[\.#](?:(?!-?\d)(?:[a-zA-Z0-9\xA0-\uFFFF_-])+)/
+  /[.#](?:(?!-?\d)(?:[a-zA-Z0-9\xA0-\uFFFF_-])+)/
 
 /**
  * Matches boolean literals, allowing for optional single or double quotes.
@@ -66,4 +67,5 @@ export const DoubleQuotedLiteral =
  *
  * @see [HTML syntax attributes](https://www.w3.org/TR/2011/WD-html5-20110525/syntax.html#syntax-attributes)
  */
+// eslint-disable-next-line no-control-regex
 export const UnquotedLiteral = /(?<==)[^"\s'`=<>\x00]+/

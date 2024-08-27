@@ -29,7 +29,8 @@ jobs:
 
       - name: Installing release dependencies
         run: |
-          npm i -D semantic-release @semantic-release/changelog @semantic-release/git
+          npm i -g semantic-release @semantic-release/changelog @semantic-release/git
+
       - name: Semantic release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

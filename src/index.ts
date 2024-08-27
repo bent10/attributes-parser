@@ -90,10 +90,8 @@ export default function parseAttrs(input: string): Attributes {
         attrs[currentKey] = currentKey
         break
       case 'AttributeShorthand':
-        const selector = value[0]
-
-        if (selector === '.') classes.push(value.slice(1))
-        else if (selector === '#') attrs.id = value.slice(1)
+        if (value[0] === '.') classes.push(value.slice(1))
+        else if (value[0] === '#') attrs.id = value.slice(1)
         break
       case 'BooleanLiteral':
       case 'NumericLiteral':
