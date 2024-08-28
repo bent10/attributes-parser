@@ -53,11 +53,11 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "json-loose": "^1.2.3"
+    "json-loose": "^1.2.4"
   },
   "devDependencies": {
     "@types/moo": "0.5.9",
-    "doogu": "4.0.3",
+    "doogu": "4.0.4",
     "vite-plugin-resolve-umd-format": "1.0.0"
   },
   "config": {
