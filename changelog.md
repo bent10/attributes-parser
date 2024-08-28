@@ -1,3 +1,10 @@
+## [2.2.3](https://github.com/bent10/attributes-parser/compare/v2.2.2...v2.2.3) (2024-08-28)
+
+
+### Bug Fixes
+
+* **deps:** ncu ([78760e4](https://github.com/bent10/attributes-parser/commit/78760e422f68c81e5d7fe659c89b5e925f9e15cb))
+
 ## [2.2.2](https://github.com/bent10/attributes-parser/compare/v2.2.1...v2.2.2) (2023-12-19)
 
 
